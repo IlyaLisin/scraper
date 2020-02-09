@@ -1,0 +1,3 @@
+project=scrapper
+test=rspec
+template=erb
