@@ -1,0 +1,43 @@
+require:
+- rubocop-rspec
+
+AllCops:
+  Exclude:
+  - 'db/schema.rb'
+  - 'tmp/**/*'
+  TargetRubyVersion: 2.6
+
+Metrics/LineLength:
+  Max: 120
+  IgnoredPatterns: ['\A#']
+
+Style/AsciiComments:
+  Enabled: false
+
+Metrics/AbcSize:
+  Exclude:
+    - 'app/lib/api_requests_concurrent.rb'
+
+Metrics/BlockLength:
+  Exclude:
+  - 'config/environments/*'
+  - 'spec/**/*'
+Metrics/MethodLength:
+  Exclude:
+    - 'app/services/sites_parse_service_spec.rb'
+    - 'app/lib/api_requests_concurrent.rb'
+
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/MessageChain:
+  Enabled: false
+
+RSpec/MessageSpies:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 4
+
+Documentation:
+  Enabled: false

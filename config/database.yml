@@ -1,0 +1,17 @@
+default: &default
+  adapter: postgresql
+  encoding: utf8
+  pool: 5
+  reconnect: true
+  url: <%= ENV["DATABASE_URL"] %>
+
+development:
+  <<: *default
+  database: scraper_dev
+
+test:
+  <<: *default
+  database: scraper_test
+
+production:
+  url: <%= ENV["DATABASE_URL"] %>

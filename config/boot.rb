@@ -1,2 +1,4 @@
-require_relative './environment'
-Hanami.boot
+# frozen_string_literal: true
+
+require 'rubygems'
+require 'bundler/setup'

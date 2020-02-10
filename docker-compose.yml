@@ -1,0 +1,30 @@
+version: '3'
+services:
+  scraper:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - .:/var/www/scraper
+    environment:
+      - DATABASE_URL=postgresql://scraper_dev:scraper_dev@postgres:5432/scraper_development
+    ports:
+      - 9292:9292
+    depends_on:
+      - postgres
+    command: rackup --host 0.0.0.0
+
+  postgres:
+    image: postgres:11
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_DB=scraper_development
+      - POSTGRES_USER=scraper_dev
+      - POSTGRES_PASSWORD=scraper_dev
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+     - scraper-pg-data:/var/lib/postgresql/data/pgdata
+
+volumes:
+  scraper-pg-data:

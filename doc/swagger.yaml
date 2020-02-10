@@ -1,0 +1,30 @@
+openapi: "3.0.0"
+
+info:
+  version: 0.0.1
+  title: Scraper API
+
+paths:
+  /cart/carts_products:
+    post:
+      summary: |
+        Роут отправки ссылок для обработки
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                urls:
+                  type: array
+                  items:
+                    type: string
+
+      responses:
+        201:
+          description: принято
+        400:
+          description: неверные параметры
+        500:
+          description: что то пошло не так

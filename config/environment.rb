@@ -1,49 +1,10 @@
-require 'bundler/setup'
-require 'hanami/setup'
-require 'hanami/model'
-require_relative '../lib/scrapper'
-require_relative '../apps/scrapper/application'
+# frozen_string_literal: true
 
-Hanami.configure do
-  mount Scrapper::Application, at: '/'
+ENV['RACK_ENV'] ||= 'test'
+ENV['PARSE_BATCH_SIZE'] ||= '10'
+ENV['DATABASE_URL'] ||= "postgresql://scraper_dev:scraper_dev@localhost:5433/scraper_#{ENV['RACK_ENV']}"
 
-  model do
-    ##
-    # Database adapter
-    #
-    # Available options:
-    #
-    #  * SQL adapter
-    #    adapter :sql, 'sqlite://db/scrapper_development.sqlite3'
-    #    adapter :sql, 'postgresql://localhost/scrapper_development'
-    #    adapter :sql, 'mysql://localhost/scrapper_development'
-    #
-    adapter :sql, ENV.fetch('DATABASE_URL')
+require File.expand_path('application', __dir__)
 
-    ##
-    # Migrations
-    #
-    migrations 'db/migrations'
-    schema     'db/schema.sql'
-  end
-
-  mailer do
-    root 'lib/scrapper/mailers'
-
-    # See https://guides.hanamirb.org/mailers/delivery
-    delivery :test
-  end
-
-  environment :development do
-    # See: https://guides.hanamirb.org/projects/logging
-    logger level: :debug
-  end
-
-  environment :production do
-    logger level: :info, formatter: :json, filter: []
-
-    mailer do
-      delivery :smtp, address: ENV.fetch('SMTP_HOST'), port: ENV.fetch('SMTP_PORT')
-    end
-  end
-end
+Bundler.require(:default, ENV['OTR_ENV'] ? ENV['OTR_ENV'].to_sym : :development)
+OTR::ActiveRecord.configure_from_file! 'config/database.yml'

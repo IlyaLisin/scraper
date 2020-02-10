@@ -1,27 +1,28 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
-gem 'rake'
-gem 'hanami',       '~> 1.3'
-gem 'hanami-model', '~> 1.3'
+ruby '2.6.5'
 
+gem 'activerecord-import'
+gem 'async-await'
+gem 'faraday'
+gem 'grape'
+gem 'otr-activerecord'
 gem 'pg'
-
-group :development do
-  # Code reloading
-  # See: https://guides.hanamirb.org/projects/code-reloading
-  gem 'shotgun', platforms: :ruby
-  gem 'hanami-webconsole'
-end
+gem 'rack'
+gem 'rake'
 
 group :test, :development do
-  gem 'dotenv', '~> 2.4'
+  gem 'pry'
+  gem 'pry-nav'
+  gem 'rubocop', require: false
+  gem 'rubocop-rspec'
 end
 
 group :test do
+  gem 'database_cleaner-active_record'
+  gem 'rack-test'
   gem 'rspec'
-  gem 'capybara'
-end
-
-group :production do
-  # gem 'puma'
+  gem 'webmock', '~> 3.0', '>= 3.0.1'
 end
